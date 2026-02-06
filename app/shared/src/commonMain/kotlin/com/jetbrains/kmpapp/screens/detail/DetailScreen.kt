@@ -32,10 +32,12 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.jetbrains.kmpapp.data.MuseumObject
+import com.jetbrains.kmpapp.getPreviewMuseumObject
 import com.jetbrains.kmpapp.screens.EmptyScreenContent
 import kmp_app_template.app.shared.generated.resources.Res
 import kmp_app_template.app.shared.generated.resources.back
@@ -66,6 +68,14 @@ fun DetailScreen(
         }
     }
 }
+
+@Composable
+@Preview
+private fun Preview() {
+    val obj = getPreviewMuseumObject()
+    ObjectDetails(obj, {})
+}
+
 
 @Composable
 private fun ObjectDetails(

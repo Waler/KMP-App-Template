@@ -23,12 +23,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.jetbrains.kmpapp.data.MuseumObject
+import com.jetbrains.kmpapp.getPreviewMuseumObject
 import com.jetbrains.kmpapp.screens.EmptyScreenContent
 import org.koin.compose.viewmodel.koinViewModel
+
+@Composable
+@Preview
+private fun EmptyListPreview() {
+    ListScreenForObjects({ }, emptyList())
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    ListScreenForObjects({ }, listOf(getPreviewMuseumObject()))
+}
 
 @Composable
 fun ListScreen(
@@ -36,7 +50,14 @@ fun ListScreen(
 ) {
     val viewModel = koinViewModel<ListViewModel>()
     val objects by viewModel.objects.collectAsStateWithLifecycle()
+    ListScreenForObjects(navigateToDetails, objects)
+}
 
+@Composable
+private fun ListScreenForObjects(
+    navigateToDetails: (objectId: Int) -> Unit,
+    objects: List<MuseumObject>
+) {
     AnimatedContent(objects.isNotEmpty()) { objectsAvailable ->
         if (objectsAvailable) {
             ObjectGrid(
